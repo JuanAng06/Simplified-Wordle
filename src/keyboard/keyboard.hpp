@@ -29,10 +29,12 @@ class Keyboard{
 		void renderKeyboard(SDL_Color textColor); //Render keyboard
 		~Keyboard(); // Destructor
 
-		// !!! TEST ZONE !!!: Update Keyboard State (2, 1, 0, -1)
 		void updateKeyboardState(const std::vector<std::vector<int>>& keyState, int currentRow, const std::string& previousGuess);
 
 		// ~~~~~~~~~~~~~~~~~~
+
+		// ~~~ TEST ZONE ~~~
+		void reset();
 };
 
 #endif

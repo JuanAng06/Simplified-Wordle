@@ -18,7 +18,7 @@ class Grid{
         TTF_Font* gridFont;
         Graphics* gridChar;
 
-        // !!! TEST ZONE !!!
+        //Grid state
         std::vector<std::vector<int>> gridState;
 
         // Render cell color
@@ -35,6 +35,9 @@ class Grid{
             gridState = newState;
         }
         void renderGridState(Graphics& graphics);
+
+        //~~~ TEST ZONE ~~~
+        void reset();
 
 };
 

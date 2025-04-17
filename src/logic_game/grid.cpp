@@ -66,3 +66,21 @@ void Grid::renderGridState(Graphics& graphics){
         }
     }
 }
+
+//~~~ TEST ZONE ~~~
+void Grid::reset(){
+
+    //Reset character grid
+    for (size_t i = 0; i < ROWS; i++){
+        for (size_t j = 0; j < COLS; j++){
+            grid[i][j] = ' ';
+        }
+    }
+
+    //Reset some states
+    curentRow = 0; currentCol = 0; currentWord = "";
+
+    //Reset gridState - TEST
+    gridState.clear();
+    std::vector<std::vector<int>> gridState;
+}

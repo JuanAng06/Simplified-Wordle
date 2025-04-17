@@ -51,4 +51,19 @@ const int FIRST_CHECK_CELL_Y = 41;
 //Const filepath to get the word
 #define DICTIONARY "src/wordlist.txt"
 
+//Show result
+#define RESULT "assets//ui//result//result.jpg"
+#define WIN_SCREEN "assets//ui//result//win_screen.png"
+#define LOSE_SCREEN "assets//ui//result//lose_screen.png"
+#define RETRY_BUTTON "assets//ui//result//retry_button.png"
+#define EXIT_BUTTON "assets//ui//result//exit_button.png"
+
+//Retry button
+const int RETRY_X_START = 148, RETRY_X_END = 148 + 365;
+const int RETRY_Y_START = 520, RETRY_Y_END = 520 + 120;
+
+//Exit button
+const int EXIT_X_START = 547, EXIT_X_END = 547 + 365;
+const int EXIT_Y_START = 520, EXIT_Y_END = 520 + 120;
+
 #endif

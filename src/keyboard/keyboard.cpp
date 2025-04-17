@@ -10,7 +10,6 @@ Keyboard::Keyboard(Graphics* gfx, int x, int y, int s)
     font = keyboardS->loadFont(KEYBOARD_FONT, KEYBOARD_TEXT_SIZE);
     if (!font) std::cerr << "Error, font not loaded!" << TTF_GetError() << std::endl;
 
-    //!!! TEST ZONE !!!
     for (int i = 0; i < 3; i++){
         for (int j = 0; j < 10; j++){
             keyChar[i][j] = -1;
@@ -101,4 +100,13 @@ Keyboard::~Keyboard(){
     if (yellowKey) SDL_DestroyTexture(yellowKey);
     if (greenKey) SDL_DestroyTexture(greenKey);
     std::cout << "~~~~~~~~~~~~~~~~~~~~~ Destroyed keyboard successfully! ~~~~~~~~~~~~~~~~~~~~" << std::endl;
+}
+
+//~~~ TEST ZONE ~~~
+void Keyboard::reset(){
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 10; j++){
+            keyChar[i][j] = -1;
+        }
+    }
 }
