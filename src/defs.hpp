@@ -66,4 +66,12 @@ const int RETRY_Y_START = 520, RETRY_Y_END = 520 + 120;
 const int EXIT_X_START = 547, EXIT_X_END = 547 + 365;
 const int EXIT_Y_START = 520, EXIT_Y_END = 520 + 120;
 
+//Show the secret word
+const int REVEAL_SECRETWORD_X = 400, REVEAL_SECRETWORD_Y = 300;
+const int REVEAL_SECRETWORD_TEXTSIZE = 80;
+
+//Show temp pop up
+const int POPUP_X = MID_WIDTH - 150 , POPUP_Y = MID_HEIGHT - 50;
+const int POPUP_TEXTSIZE = 30;
+
 #endif

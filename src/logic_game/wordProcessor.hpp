@@ -30,6 +30,9 @@ class WordProcessor {
         // Check the word per guess
         void checkGuess(const std::string &getPreviousGuess, int row);
         const std::vector<std::vector<int>>& getGridState() const { return gridState; } // Get 2D vector gridState
+
+        //~~~ RESET GRIDSTATE ~~~
+        void reset();
 };
 
 #endif

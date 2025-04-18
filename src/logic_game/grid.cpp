@@ -81,6 +81,5 @@ void Grid::reset(){
     curentRow = 0; currentCol = 0; currentWord = "";
 
     //Reset gridState - TEST
-    gridState.clear();
-    std::vector<std::vector<int>> gridState;
+    gridState.assign(ROWS, std::vector<int>(COLS, -1));
 }

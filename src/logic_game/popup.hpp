@@ -5,11 +5,17 @@
 #include "../init/graphics.hpp"
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <string>
 
-class PopUp{
+class Result{
     private:
         Graphics *popup;
+        TTF_Font* result_font;
+        TTF_Font* popup_font;
+        SDL_Color color = {255,255,255,255}; //White
+        SDL_Texture* renderSecretWord;
+
         SDL_Texture* result_win = popup->loadTexture(WIN_SCREEN);
         SDL_Texture* result_lose = popup->loadTexture(LOSE_SCREEN);
         SDL_Texture* retry_button = popup->loadTexture(RETRY_BUTTON);
@@ -19,15 +25,25 @@ class PopUp{
         SDL_Event event;
         int mouseX, mouseY;
 
+        //Render message ~~~ TEST ZONE ~~~
+        SDL_Texture* renderMsg;
+        Uint32 startPopUpTime = SDL_GetTicks(); //TEST
+        Uint32 popUpDuration = 2000;
+        bool isVisible = false;
+        std::string lastMessage = "";
+
     public:
-        PopUp(Graphics* result);
-        ~PopUp();
-        bool retry(bool playerWon);
+        Result(Graphics* result);
+        ~Result();
+
+        //Show the result
+        bool retry(bool didPlayerWin, std::string& secretWord);
         bool isRetryButton(int x, int y);
         bool isExitButton(int x, int y);
+        void showSecretWord(std::string &secretWord);
 
         //~~~ TEST ZONE ~~~
-        void showSecretWord(std::string &secretWord);
+        void renderMessage(const char* message, bool &showOnce, int x, int y);
 };
 
 #endif

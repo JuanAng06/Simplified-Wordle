@@ -52,3 +52,7 @@ void WordProcessor::checkGuess(const std::string& previousGuess, int row){
         gridState[row] = rowState;
     }
 }
+
+void WordProcessor::reset(){
+    gridState.assign(ROWS, std::vector<int>(COLS, -1));
+}

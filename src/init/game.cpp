@@ -70,7 +70,7 @@ void Start::play() {
 	int currentRow = 0;
 
 	//Pop Up
-	PopUp popUp(&graphics);
+	Result result(&graphics);
 
 	///////////////////////// Game loop ////////////////////////////
 	bool keepRunning = true;
@@ -82,94 +82,110 @@ void Start::play() {
 
 		//Set a secret word
 		wordProcessorTest.setSecretWord();
-		std::cout << "Secret Word: " << wordProcessorTest.getSecretWord() << std::endl;
+		std::string secretWord = wordProcessorTest.getSecretWord();
+		std::cout << "Secret Word: " << secretWord << std::endl;
 
 		std::string currentWord = "";
 		int currentCol = 0;
 		int currentRow = 0;
 
 		bool gameRunning = true;
+		// result.renderMessage("Guess your first word!");
+
+		//~~~ TEST ZONE ~~~
+		bool showOnce = true;
+		bool didShowWhenInvalid = false;
+
 		while (gameRunning) {
+
 			while (SDL_PollEvent(&event)) {
 				if (event.type == SDL_QUIT) {
 					gameRunning = false;
 					keepRunning = false;
-					break;
 				}
 
 				inputHandler.handleEvent(event, currentWord, currentCol, COLS, grid, currentRow);
 
 				//Process the check prucedure
-				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN && currentWord.length() == 5 && currentRow < ROWS) {
+				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN && currentRow < ROWS) {
+					if (currentWord.length() == 5) {
 
-					//debug
-					std::cout << std::string(20, '~') << std::endl;
-					std::cout << "ENTER was pressed" << std:: endl;
+						//debug
+						std::cout << std::string(20, '~') << std::endl;
+						std::cout << "ENTER was pressed" << std:: endl;
 
-					//Update the guess stat (Use previousGuess to check)
-					wordProcessorTest.updatePreviousGuess(inputHandler);
+						//Update the guess stat (Use previousGuess to check)
+						wordProcessorTest.updatePreviousGuess(inputHandler);
 
-					//Check and update grid state
-					wordProcessorTest.checkGuess(currentWord, currentRow);
-					const std::vector<std::vector<int>>& gridState = wordProcessorTest.getGridState();
-					keyboard.updateKeyboardState(gridState, currentRow, wordProcessorTest.getPreviousGuess());
+						//Check and update grid state
+						wordProcessorTest.checkGuess(currentWord, currentRow);
+						const std::vector<std::vector<int>>& gridState = wordProcessorTest.getGridState();
+						keyboard.updateKeyboardState(gridState, currentRow, wordProcessorTest.getPreviousGuess());
 
-					//debug
-					std::cout << "Grid size: " << gridState.size() << std::endl;
-					grid.updateGridState(gridState);
+						//debug
+						std::cout << "Grid size: " << gridState.size() << std::endl;
+						grid.updateGridState(gridState);
 
-					std::cout << "Current row: " << currentRow + 1 << std::endl;
+						std::cout << "Current row: " << currentRow + 1 << std::endl;
 
-					std::cout << std::endl << "Previous grid state: " << std::endl;
-					for (int i : gridState[currentRow]) {
-						std::cout << i << " ";
-					}
-					std::cout << std::endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-					//end of debug
-
-					//Check if the game over
-					bool guessedCorrectly = true;
-					for (int status : gridState[currentRow]) {
-						if (status != 2) {
-							guessedCorrectly = false;
-							break;
+						std::cout << std::endl << "Previous grid state: " << std::endl;
+						for (int i : gridState[currentRow]) {
+							std::cout << i << " ";
 						}
-					}
+						std::cout << std::endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+						//end of debug
 
-					if (guessedCorrectly) {
-						std::cout << " ~~~~~~~~~~~~ User found the word ~~~~~~~~~~~~~" << std::endl;
-
-						//~~ TEST ZONE ~~~
-						if (popUp.retry(guessedCorrectly)) {
-							keyboard.reset();
-							grid.reset();
-							gameRunning = false;
+						//Check if the game over
+						bool guessedCorrectly = true;
+						for (int status : gridState[currentRow]) {
+							if (status != 2) {
+								guessedCorrectly = false;
+								break;
+							}
 						}
+
+						if (guessedCorrectly) {
+							std::cout << " ~~~~~~~~~~~~ User found the word ~~~~~~~~~~~~~" << std::endl;
+
+							//~~ TEST ZONE ~~~
+							if (result.retry(guessedCorrectly, secretWord)) {
+								keyboard.reset();
+								grid.reset();
+								wordProcessorTest.reset();
+								gameRunning = false;
+							}
+							else {
+								gameRunning = false;
+								keepRunning = false; //quit the game
+							}
+						}
+
+						else if (currentRow == ROWS - 1) {
+							std::cout << " ~~~~~~~~~~~ User failed to find a word ~~~~~~~~~~~~~" << std::endl;
+							if (result.retry(guessedCorrectly, secretWord)) {
+								keyboard.reset();
+								grid.reset();
+								wordProcessorTest.reset();
+								gameRunning = false;
+							}
+							else {
+								gameRunning = false;
+								keepRunning = false; //quit the game
+							}
+						}
+
+						// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 						else {
-							gameRunning = false;
-							keepRunning = false; //quit the game
+							//Continue the game
+							currentWord = "";
+							currentCol = 0;
+							currentRow++;
 						}
 					}
 
-					else if (currentRow == ROWS - 1) {
-						std::cout << " ~~~~~~~~~~~ User failed to find a word ~~~~~~~~~~~~~" << std::endl;
-						if (popUp.retry(guessedCorrectly)) {
-							keyboard.reset();
-							grid.reset();
-							gameRunning = false;
-						}
-						else {
-							gameRunning = false;
-							keepRunning = false; //quit the game
-						}
-					}
-
-					// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+					//~~~ TEST ZONE ~~~
 					else {
-						//Continue the game
-						currentWord = "";
-						currentCol = 0;
-						currentRow++;
+						didShowWhenInvalid = true;
 					}
 				}
 			}
@@ -189,6 +205,15 @@ void Start::play() {
 
 			//Render the letters
 			grid.render();
+
+			//Show the pop up message
+			if (showOnce) {
+				result.renderMessage("Guess your first word!", showOnce, POPUP_X, POPUP_Y);
+			}
+
+			if(didShowWhenInvalid) {
+				result.renderMessage("Too short!", didShowWhenInvalid, POPUP_X + 50, POPUP_Y);
+			}
 
 			//Show to the screen
 			graphics.presentScene();
