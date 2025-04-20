@@ -3,6 +3,7 @@
 
 #include "../defs.hpp"
 #include "../init/graphics.hpp"
+#include "../init/music_and_background/audioManager.hpp"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -16,10 +17,15 @@ class Result{
         SDL_Color color = {255,255,255,255}; //White
         SDL_Texture* renderSecretWord;
 
+        std::string lastSecretWord = "";
+
         SDL_Texture* result_win = popup->loadTexture(WIN_SCREEN);
         SDL_Texture* result_lose = popup->loadTexture(LOSE_SCREEN);
         SDL_Texture* retry_button = popup->loadTexture(RETRY_BUTTON);
         SDL_Texture* exit_button = popup->loadTexture(EXIT_BUTTON);
+
+        //Popup message
+        SDL_Texture* popupBox = popup->loadTexture(POP_UP_ANNOUCNER);
 
         //Using mouse event
         SDL_Event event;
@@ -31,6 +37,10 @@ class Result{
         Uint32 popUpDuration = 2000;
         bool isVisible = false;
         std::string lastMessage = "";
+
+        //TEST ZONE
+        Audio* sound;
+        Mix_Chunk* clickButton = sound->loadSound(CLICK_BUTTON);
 
     public:
         Result(Graphics* result);

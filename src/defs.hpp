@@ -1,5 +1,5 @@
-#ifndef _RESIZE__H
-#define _RESIZE__H
+#ifndef _DEFS__H
+#define _DEFS__H
 
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 768;
@@ -25,18 +25,19 @@ const int WORD_LENGTH = 5;
 
 //keyboard render
 #define KEYBOARD_FONT "assets//font//Gilroy-ExtraBold.ttf"
-const int START_KEYBOARD_X = 201;
-const int START_KEYBOARD_Y = MID_WIDTH - 24;
+#define KEY_LETTER_LAYOUT "assets//ui//key_letter_layout.png"
+const int START_KEYBOARD_X = 195;
+const int START_KEYBOARD_Y = MID_WIDTH - 30;
 const int KEYBOARD_TEXT_SIZE = 32;
-const int ROW_SPACING = 67;
+const int ROW_SPACING = 66;
 const int PADDING = 66;
 
 //Grid manager
 static const int ROWS = 6;
 static const int COLS = 5;
 
-const int FIRST_CELL_X = MID_WIDTH - PADDING * 2; 
-const int FIRST_CELL_Y = 50;
+const int FIRST_CELL_X = MID_WIDTH - PADDING * 2 - 1; 
+const int FIRST_CELL_Y = 52;
 const int GRID_PADDING = 63;
 
 const int CELL_SIZE = 64;
@@ -45,8 +46,9 @@ const int CELL_SIZE = 64;
 #define CORRECT_CELL "assets//ui//CellColor//grid_green.png"
 
 //print gridstate
-const int FIRST_CHECK_CELL_X = MID_WIDTH - PADDING * 2 - 30;
-const int FIRST_CHECK_CELL_Y = 41;
+const int FIRST_CHECK_CELL_X = 359;
+const int FIRST_CHECK_CELL_Y = 44;
+const int CHECK_CELL_PADDING = 62;
 
 //Const filepath to get the word
 #define DICTIONARY "src/wordlist.txt"
@@ -71,7 +73,20 @@ const int REVEAL_SECRETWORD_X = 400, REVEAL_SECRETWORD_Y = 300;
 const int REVEAL_SECRETWORD_TEXTSIZE = 80;
 
 //Show temp pop up
+#define POP_UP_ANNOUCNER "assets//ui//popup_announcer.png"
 const int POPUP_X = MID_WIDTH - 150 , POPUP_Y = MID_HEIGHT - 50;
 const int POPUP_TEXTSIZE = 30;
+const int POPUP_CENTER_X = MID_WIDTH - 250, POPUP_CENTER_Y = MID_HEIGHT - 125;
+
+//Sound effect - TEST ZONE
+#define ENTER_KEY "assets//sfx//enterKey.MP3"
+#define CLICK_BUTTON "assets//sfx//buttonClick.MP3"
+
+//KeySound
+#define KEY_SOUND_1 "assets//sfx//keyboard_sound//keysound_1.MP3"
+#define KEY_SOUND_2 "assets//sfx//keyboard_sound//keysound_2.MP3"
+#define KEY_SOUND_3 "assets//sfx//keyboard_sound//keysound_3.MP3"
+#define KEY_SOUND_4 "assets//sfx//keyboard_sound//keysound_4.MP3"
+#define KEY_SOUND_5 "assets//sfx//keyboard_sound//keysound_5.MP3"
 
 #endif

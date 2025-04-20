@@ -22,6 +22,7 @@ class Keyboard{
 		SDL_Texture* grayKey = keyboardS->loadTexture(KEY_GRAY_IMG);
 		SDL_Texture* yellowKey = keyboardS->loadTexture(KEY_YELLOW_IMG);
 		SDL_Texture* greenKey = keyboardS->loadTexture(KEY_GREEN_IMG);
+		SDL_Texture* keyLayout = keyboardS->loadTexture(KEY_LETTER_LAYOUT);
 
 		// ~~~~~~~~~~~~~~~~~~~~~
 	public:

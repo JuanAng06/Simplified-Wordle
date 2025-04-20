@@ -23,7 +23,7 @@ void Grid::render(){
 
                 //Render the letter on grid [i][j]
                 SDL_Texture* letter = gridChar->renderText(renderLetter.c_str(), gridFont, textColor);
-                gridChar->renderTexture(letter, FIRST_CELL_X + j * GRID_PADDING, FIRST_CELL_Y + i * GRID_PADDING);
+                gridChar->renderTexture(letter, FIRST_CELL_X + j * (GRID_PADDING - 1), FIRST_CELL_Y + i * (GRID_PADDING - 1));
                 SDL_DestroyTexture(letter);
             }
         }
@@ -61,7 +61,7 @@ void Grid::renderGridState(Graphics& graphics){
             }
 
             if (texture){
-                graphics.renderTexture(texture, FIRST_CHECK_CELL_X + col * GRID_PADDING, FIRST_CHECK_CELL_Y + row * GRID_PADDING);
+                graphics.renderTexture(texture, FIRST_CHECK_CELL_X + col * CHECK_CELL_PADDING, FIRST_CHECK_CELL_Y + row * CHECK_CELL_PADDING);
             }
         }
     }

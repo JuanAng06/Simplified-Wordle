@@ -83,6 +83,11 @@ void Start::play() {
 		//Set a secret word
 		wordProcessorTest.setSecretWord();
 		std::string secretWord = wordProcessorTest.getSecretWord();
+
+		// ~~~ TEST ZONE ~~~
+		const char* charSecretWord = secretWord.c_str();
+		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 		std::cout << "Secret Word: " << secretWord << std::endl;
 
 		std::string currentWord = "";
@@ -90,7 +95,6 @@ void Start::play() {
 		int currentRow = 0;
 
 		bool gameRunning = true;
-		// result.renderMessage("Guess your first word!");
 
 		//~~~ TEST ZONE ~~~
 		bool showOnce = true;
@@ -212,7 +216,7 @@ void Start::play() {
 			}
 
 			if(didShowWhenInvalid) {
-				result.renderMessage("Too short!", didShowWhenInvalid, POPUP_X + 50, POPUP_Y);
+				result.renderMessage("Too short!", didShowWhenInvalid, POPUP_X + 75, POPUP_Y);
 			}
 
 			//Show to the screen

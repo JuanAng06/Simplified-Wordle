@@ -5,6 +5,11 @@
 
 //Handle input event
 void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& currentCol, int maxCols, Grid&grid, int& currentRow){
+
+    if (event.type == SDL_KEYDOWN){
+        playKeySound();
+    }
+
     if (event.type == SDL_TEXTINPUT && currentCol < maxCols && isValidChar(event.text.text[0])){
         currentWord += event.text.text[0];
         grid.setLetter(currentRow,currentCol, event.text.text[0]);
@@ -32,6 +37,9 @@ void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& c
 
     //Case: Enter
     else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN && currentWord.size() == 5){
+
+        sound->playSfx(enterKey_sfx);
+
         if (currentRow < ROWS - 1){
             previousWord = currentWord;
             currentCol = 0;
@@ -43,4 +51,10 @@ void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& c
                 << "currentCol: " << currentCol << std::endl 
                 << "currentRow: " << currentRow << std::endl;
     }
+}
+
+void HandleInput::playKeySound(){
+    std::vector<Mix_Chunk*> playSound = {keySound_1, keySound_2, keySound_3, keySound_4, keySound_5};
+    int index = rand() % playSound.size();
+    sound->playSfx(playSound[index]);
 }

@@ -49,13 +49,19 @@ bool Result::retry(bool didPlayerWin, std::string& secretWord) {
 		//Exit button
 		if (isExitButton(mouseX,mouseY)) {
 			popup->renderTexture(exit_button, EXIT_X_START, EXIT_Y_START);
-			if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) return false; //Quit the game
+			if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT){
+				sound->playSfx(clickButton);
+				return false; //Quit the game
+			}
 		}
 
 		//Retry button
 		if (isRetryButton(mouseX,mouseY)) {
 			popup->renderTexture(retry_button, RETRY_X_START, RETRY_Y_START);
-			if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) return true; //New game
+			if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT){
+				sound->playSfx(clickButton);
+				return true; //New game
+			}
 		}
 
 		popup->presentScene();
@@ -65,12 +71,22 @@ bool Result::retry(bool didPlayerWin, std::string& secretWord) {
 
 //Reveal the secret word
 void Result::showSecretWord(std::string &secretWord){
-	std::string upperWord = secretWord;
-	for (char &c : upperWord){
-		c = toupper(c);
+
+	if (lastSecretWord != secretWord){
+		lastSecretWord == secretWord;
+		std::string upperWord = secretWord;
+		for (char &c : upperWord){
+			c = toupper(c);
+		}
+
+		if (renderSecretWord){
+			SDL_DestroyTexture(renderSecretWord);
+		}
+
+		const char* text = upperWord.c_str();
+		renderSecretWord = popup->renderText(text, result_font, color);
 	}
-	const char* text = upperWord.c_str();
-	renderSecretWord = popup->renderText(text, result_font, color);
+	
 	popup->renderTexture(renderSecretWord, REVEAL_SECRETWORD_X, REVEAL_SECRETWORD_Y);
 }
 
@@ -93,6 +109,8 @@ void Result::renderMessage(const char* message, bool &showOnce, int x, int y){
 	}
 
 	renderMsg = popup->renderText(message, popup_font, color);
+
+	popup->renderTexture(popupBox, POPUP_CENTER_X, POPUP_CENTER_Y);
 	popup->renderTexture(renderMsg, x, y);
 	// popup->presentScene();
 

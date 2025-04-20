@@ -25,7 +25,7 @@ void Keyboard::renderKeyboard(SDL_Color textColor){
         int posY = startY + ROW_SPACING * row;
 
         for (size_t i = 0; i < currentKeyRow.length(); i++){
-            int posX = startX + PADDING * i;
+            int posX = startX + PADDING * i - 10;
             if (row == 1) posX += PADDING / 2;
             if (row == 2) posX += PADDING * 3 / 2;
 
@@ -45,9 +45,6 @@ void Keyboard::renderKeyboard(SDL_Color textColor){
                     keyTexture = greenKey;
                     break;
             }
-            //~~~~~~~~~~~~~~~~~~~~
-            std::string letter(1, currentKeyRow[i]);
-            SDL_Texture* letterTexture = keyboardS->renderText(letter.c_str(), font, textColor);\
 
             // !!! TEST ZONE !!!
             if (keyTexture){
@@ -55,10 +52,7 @@ void Keyboard::renderKeyboard(SDL_Color textColor){
             }
             //~~~~~~~~~~~~~~~~~~~~~~~
 
-            if (letterTexture) {
-                keyboardS->renderTexture(letterTexture, posX, posY);
-                SDL_DestroyTexture(letterTexture); // <<<<< ????
-            }
+            keyboardS->renderTexture(keyLayout, 0, MID_HEIGHT);
         }
     }
 }
