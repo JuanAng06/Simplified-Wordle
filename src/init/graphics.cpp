@@ -79,6 +79,7 @@ void Graphics::renderTexture(SDL_Texture *texture, int x, int y)
 	SDL_RenderCopy(renderer, texture, NULL, &dest);
 }
 
+
 /////////////////////////////////////// Thoát SDL ///////////////////////////////////////
 void Graphics::quit()
 {

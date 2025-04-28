@@ -93,7 +93,8 @@ Keyboard::~Keyboard(){
     if (grayKey) SDL_DestroyTexture(grayKey);
     if (yellowKey) SDL_DestroyTexture(yellowKey);
     if (greenKey) SDL_DestroyTexture(greenKey);
-    std::cout << "~~~~~~~~~~~~~~~~~~~~~ Destroyed keyboard successfully! ~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    if (grayKey || yellowKey || greenKey) std::cout << "[DEBUG] Failed to destroy Keyboard" << std::endl;
+    else std::cout << "~~~~~~~~~~~~~~~~~~~~~ Destroyed keyboard successfully! ~~~~~~~~~~~~~~~~~~~~" << std::endl;
 }
 
 //~~~ TEST ZONE ~~~

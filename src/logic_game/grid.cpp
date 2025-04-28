@@ -11,7 +11,7 @@ Grid::Grid(Graphics* gridChar ,TTF_Font* font) : gridFont(font), gridChar(gridCh
     }
 }
 
-//Initialize the grid + character
+//Initialize the grid + character + Render word
 void Grid::render(){
     SDL_Color textColor = {255, 255, 255, 255};
     for (int i = 0; i < ROWS; i++){

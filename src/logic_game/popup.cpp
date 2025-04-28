@@ -35,7 +35,6 @@ bool Result::retry(bool didPlayerWin, std::string& secretWord) {
 		if (didPlayerWin) popup->renderTexture(result_win, 0, 0);
 		else popup->renderTexture(result_lose, 0, 0);
 
-		//~~~TEST ZONE ~~~
 		showSecretWord(secretWord);
 
 		SDL_PollEvent(&event);
@@ -112,6 +111,7 @@ void Result::renderMessage(const char* message, bool &showOnce, int x, int y){
 
 	popup->renderTexture(popupBox, POPUP_CENTER_X, POPUP_CENTER_Y);
 	popup->renderTexture(renderMsg, x, y);
-	// popup->presentScene();
+
+	SDL_DestroyTexture(renderMsg);
 
 }

@@ -31,14 +31,14 @@ class Result{
         SDL_Event event;
         int mouseX, mouseY;
 
-        //Render message ~~~ TEST ZONE ~~~
+        //Render message
         SDL_Texture* renderMsg;
-        Uint32 startPopUpTime = SDL_GetTicks(); //TEST
+        Uint32 startPopUpTime = SDL_GetTicks();
         Uint32 popUpDuration = 2000;
         bool isVisible = false;
         std::string lastMessage = "";
 
-        //TEST ZONE
+        //Audio
         Audio* sound;
         Mix_Chunk* clickButton = sound->loadSound(CLICK_BUTTON);
 
@@ -52,7 +52,7 @@ class Result{
         bool isExitButton(int x, int y);
         void showSecretWord(std::string &secretWord);
 
-        //~~~ TEST ZONE ~~~
+        //Render message
         void renderMessage(const char* message, bool &showOnce, int x, int y);
 };
 

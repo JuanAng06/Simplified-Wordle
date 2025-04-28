@@ -15,11 +15,7 @@ void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& c
         grid.setLetter(currentRow,currentCol, event.text.text[0]);
         currentCol++;
 
-        std::cout << "A key was pressed : " << std::endl;
-        std::cout << "currentWord: " << currentWord << std::endl 
-                << "previousWord: " << previousWord << std::endl
-                << "currentCol: " << currentCol << std::endl 
-                << "currentRow: " << currentRow << std::endl;
+        std::cout << "A key was pressed. " << std::endl;
 
     } 
     
@@ -30,9 +26,6 @@ void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& c
         grid.setLetter(currentRow, currentCol, ' ');
 
         std::cout << "BACKSPACE" << std::endl;
-        std::cout << "currentWord: " << currentWord << std::endl 
-                << "currentCol: " << currentCol << std::endl 
-                << "currentRow: " << currentRow << std::endl;
     }
 
     //Case: Enter
@@ -46,10 +39,13 @@ void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& c
         }
 
         std::cout << "ENTER" << std::endl;
+    }
+
+    if(isValidChar(event.text.text[0])){
         std::cout << "currentWord: " << currentWord << std::endl 
-                << "previousWord: " << previousWord << std::endl
-                << "currentCol: " << currentCol << std::endl 
-                << "currentRow: " << currentRow << std::endl;
+        << "previousWord: " << previousWord << std::endl
+        << "Current pos: (" << currentCol << ", " << currentRow << ")" << std::endl
+        << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
     }
 }
 

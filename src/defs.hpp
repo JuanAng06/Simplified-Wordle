@@ -89,4 +89,19 @@ const int POPUP_CENTER_X = MID_WIDTH - 250, POPUP_CENTER_Y = MID_HEIGHT - 125;
 #define KEY_SOUND_4 "assets//sfx//keyboard_sound//keysound_4.MP3"
 #define KEY_SOUND_5 "assets//sfx//keyboard_sound//keysound_5.MP3"
 
+//Main menu UI
+#define MAIN_MENU_SCREEN "assets//ui//mainMenu//main_menu_screen.png"
+#define MENU_EXIT_BUTTON "assets//ui//mainMenu//exit_button.png"
+#define MENU_TUTORIAL_BUTTON "assets//ui//mainMenu//tutorial_button.png"
+#define MENU_PLAY_BUTTON "assets//ui//mainMenu//play_button.png"
+#define MENU_TUTORIAL_SCREEN "assets//ui//mainMenu//tutorial_screen.png"
+#define TUTORIAL_OKAY_BUTTON "assets//ui//mainMenu//tutorial_okay_button.png"
+
+//Back button + give up button
+#define BACK_BUTTON "assets//ui//back_button.png"
+#define BACK_BUTTON_HOVER "assets//ui//back_button_hover.png"
+#define GIVEUP_BUTTON "assets//ui//giveup_button.png"
+#define GIVEUP_BUTTON_HOVER "assets//ui//giveup_button_hover.png"
+
+
 #endif
