@@ -15,7 +15,7 @@ class Result{
         TTF_Font* result_font;
         TTF_Font* popup_font;
         SDL_Color color = {255,255,255,255}; //White
-        SDL_Texture* renderSecretWord;
+        SDL_Texture* renderSecretWord = nullptr;
 
         std::string lastSecretWord = "";
 
@@ -32,7 +32,7 @@ class Result{
         int mouseX, mouseY;
 
         //Render message
-        SDL_Texture* renderMsg;
+        SDL_Texture* renderMsg = nullptr;
         Uint32 startPopUpTime = SDL_GetTicks();
         Uint32 popUpDuration = 2000;
         bool isVisible = false;

@@ -83,16 +83,10 @@ void Graphics::renderTexture(SDL_Texture *texture, int x, int y)
 /////////////////////////////////////// Thoát SDL ///////////////////////////////////////
 void Graphics::quit()
 {
-	std::cerr << "Quitting SDL_IMG..." << std::endl;
 	IMG_Quit();
-
-	std::cerr << "Quitting SDL_Mix..." << std::endl;
 	Mix_Quit();
-
-	std::cerr << "Quitting SDL_TTF..." << std::endl;
 	TTF_Quit();
 
-	std::cerr << "Destroying texture..." << std::endl;
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
@@ -124,7 +118,7 @@ TTF_Font* Graphics::loadFont (const char* path, int size){
 		SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR,
 					   "Load font %s", TTF_GetError());
 	}
-	return gFont; //o
+	return gFont;
 }
 
 SDL_Texture* Graphics::renderText(const char* text, TTF_Font* font, SDL_Color textColor){
@@ -142,4 +136,14 @@ SDL_Texture* Graphics::renderText(const char* text, TTF_Font* font, SDL_Color te
 	}
 	SDL_FreeSurface( textSurface );
 	return texture;
+}
+
+void Graphics::destroyTexture(const char* path, SDL_Texture *& texture){
+	if (texture != nullptr){
+		SDL_DestroyTexture(texture);
+		texture = nullptr;
+		SDL_Log("Successfully destroyed texture: %s", path);
+	} else {
+		SDL_Log("Texture %s is nullptr already!", path);
+	}
 }

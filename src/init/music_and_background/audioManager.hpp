@@ -23,6 +23,9 @@ class Audio{
 
 	//Play SFX
 	void playSfx(Mix_Chunk* gChunk);
+
+	//Quit sound
+	void quitSound(const char *path, Mix_Chunk *& gChunk);
 };
 
 #endif

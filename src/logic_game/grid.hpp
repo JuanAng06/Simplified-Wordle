@@ -36,8 +36,10 @@ class Grid{
         }
         void renderGridState(Graphics& graphics);
 
-        //~~~ TEST ZONE ~~~
         void reset();
+
+        //Destructor - TEST
+        ~Grid();
 
 };
 

@@ -57,6 +57,9 @@ class Graphics {
 
 	SDL_Texture* renderText (const char* text, TTF_Font* font, SDL_Color textColor);
 
+	//////////////// DESTROY ////////////////////
+	void destroyTexture(const char* path, SDL_Texture *& texture);
+
 };
 
 class ScrollingBackground {

@@ -20,6 +20,9 @@ class HandleInput{
         //Key press sound effect
         void playKeySound();
 
+        //Destructor - TEST
+        ~HandleInput();
+
     private:
         std::string previousWord = "";
 

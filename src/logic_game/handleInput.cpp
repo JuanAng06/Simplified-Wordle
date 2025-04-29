@@ -54,3 +54,18 @@ void HandleInput::playKeySound(){
     int index = rand() % playSound.size();
     sound->playSfx(playSound[index]);
 }
+
+//Destructor
+HandleInput::~HandleInput(){
+
+    sound->quitSound(ENTER_KEY, enterKey_sfx);
+    sound->quitSound(KEY_SOUND_1, keySound_1);
+    sound->quitSound(KEY_SOUND_2, keySound_2);
+    sound->quitSound(KEY_SOUND_3, keySound_3);
+    sound->quitSound(KEY_SOUND_4, keySound_4);
+    sound->quitSound(KEY_SOUND_5, keySound_5);
+    
+    if (enterKey_sfx || keySound_1 || keySound_2 || keySound_3 || keySound_4 || keySound_5)
+        std::cout << "[DEBUG] Failed to destroy HandleInput!" << std::endl;
+    else std::cout << "[DEBUG] Destroyed HandleInput successfully!" << std::endl;
+}

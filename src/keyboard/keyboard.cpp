@@ -90,11 +90,12 @@ void Keyboard::updateKeyboardState(const std::vector<std::vector<int>>& keyState
 
 //Clean up
 Keyboard::~Keyboard(){
-    if (grayKey) SDL_DestroyTexture(grayKey);
-    if (yellowKey) SDL_DestroyTexture(yellowKey);
-    if (greenKey) SDL_DestroyTexture(greenKey);
+    keyboardS->destroyTexture(KEY_GRAY_IMG, grayKey);
+    keyboardS->destroyTexture(KEY_YELLOW_IMG, yellowKey);
+    keyboardS->destroyTexture(KEY_GREEN_IMG, greenKey);
+
     if (grayKey || yellowKey || greenKey) std::cout << "[DEBUG] Failed to destroy Keyboard" << std::endl;
-    else std::cout << "~~~~~~~~~~~~~~~~~~~~~ Destroyed keyboard successfully! ~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    else std::cout << "[DEBUG] Destroyed keyboard successfully!" << std::endl;
 }
 
 //~~~ TEST ZONE ~~~

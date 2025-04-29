@@ -164,6 +164,7 @@ void Start::play() {
 					}
 				}
 				if (backToMenuBtn.isClicked(event)) {
+					audio.playSfx(clickSound);
 					onMenu = true;
 					resetGame(keyboard, grid, wordProcessorTest, gameRunning);
 					std::cout << "Going back to main menu..." << std::endl;
@@ -171,6 +172,7 @@ void Start::play() {
 
 				//~~~ TEST ZONE ~~~
 				if (giveUpBtn.isClicked(event)) {
+					audio.playSfx(clickSound);
 					std::cout << " ~~~~~~~~~~~ User failed to find a word ~~~~~~~~~~~~~" << std::endl;
 					if (result.retry(false, secretWord))
 						resetGame(keyboard, grid, wordProcessorTest, gameRunning); //New word
@@ -245,7 +247,6 @@ void Start::loadMenuTexture() {
 	tutorial_okayButton = graphics.loadTexture(TUTORIAL_OKAY_BUTTON);
 }
 
-//~~~ TEST ZONE ~~~
 bool Start::isOnMainMenu() {
 	Button exitBtn(&graphics, 314, 586, 395, 115, nullptr, menu_ExitButton);
 	Button playBtn(&graphics, 314, 326, 395, 115, nullptr, menu_PlayButton);

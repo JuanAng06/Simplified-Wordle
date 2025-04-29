@@ -38,3 +38,14 @@ void Audio::playSfx(Mix_Chunk* gChunk){
 		Mix_PlayChannel(-1, gChunk, 0);
 	}
 }
+
+//Free sound
+void Audio::quitSound(const char *path, Mix_Chunk *& gChunk){
+	if (gChunk != nullptr){
+		Mix_FreeChunk(gChunk);
+		gChunk = nullptr;
+		SDL_Log("[DEBUG] Unloaded successfully: %s", path);
+	} else {
+		SDL_Log("[DEBUG] %s is nullptr already!", path);
+	}
+}

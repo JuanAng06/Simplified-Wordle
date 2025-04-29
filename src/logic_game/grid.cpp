@@ -67,7 +67,6 @@ void Grid::renderGridState(Graphics& graphics){
     }
 }
 
-//~~~ TEST ZONE ~~~
 void Grid::reset(){
 
     //Reset character grid
@@ -80,6 +79,17 @@ void Grid::reset(){
     //Reset some states
     curentRow = 0; currentCol = 0; currentWord = "";
 
-    //Reset gridState - TEST
+    //Reset gridState
     gridState.assign(ROWS, std::vector<int>(COLS, -1));
+}
+
+//Destructor - TEST ZONE
+Grid::~Grid(){
+    if (gray_cell) SDL_DestroyTexture(gray_cell);
+    if (yellow_cell) SDL_DestroyTexture(yellow_cell);
+    if (green_cell) SDL_DestroyTexture(green_cell);
+
+    gray_cell = yellow_cell = green_cell = nullptr;
+    if (gray_cell || yellow_cell || green_cell) std::cout << "[DEBUG] Failed to destroy Grid" << std::endl;
+    else std::cout << "[DEBUG] Destroyted Grid successfully!" << std::endl;
 }

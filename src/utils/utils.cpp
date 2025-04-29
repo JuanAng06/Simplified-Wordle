@@ -1,5 +1,7 @@
 #include "utils.hpp"
 
+#include <iostream>
+
 bool isValidChar (char c){
     return (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'));
 }
@@ -40,7 +42,13 @@ void Button::renderButton(){
     if (toRender){
         graphics->renderTexture(toRender, rect.x, rect.y);
     }
-
-    //TEST
-    //if (toRender) SDL_DestroyTexture(toRender);
 }
+
+//Destructor
+// Button::~Button(){
+//     if (normalTex) SDL_DestroyTexture(normalTex) ;
+//     if (hoverTex) SDL_DestroyTexture(hoverTex);
+//     hoverTex = normalTex = nullptr;
+//     if (normalTex || hoverTex) std::cout << "[DEBUG] Failed to destroy Button!" << std::endl;
+//     else std::cout << "[DEBUG] Destroyed Button successfully!" << std::endl;
+// }

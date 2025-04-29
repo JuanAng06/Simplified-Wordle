@@ -17,24 +17,20 @@ class Keyboard{
 		
 		std::vector<std::string> keyboardRows = {"QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"};
 
-		// !!! TEST ZONE !!!
+		//Load keyboard
 		int keyChar [3][10];
 		SDL_Texture* grayKey = keyboardS->loadTexture(KEY_GRAY_IMG);
 		SDL_Texture* yellowKey = keyboardS->loadTexture(KEY_YELLOW_IMG);
 		SDL_Texture* greenKey = keyboardS->loadTexture(KEY_GREEN_IMG);
 		SDL_Texture* keyLayout = keyboardS->loadTexture(KEY_LETTER_LAYOUT);
 
-		// ~~~~~~~~~~~~~~~~~~~~~
 	public:
         Keyboard(Graphics* gfx, int startX_ = START_KEYBOARD_X, int startY_ = START_KEYBOARD_Y, int s = 0); // Constructor
-		void renderKeyboard(SDL_Color textColor); //Render keyboard
+		void renderKeyboard(SDL_Color textColor);
 		~Keyboard(); // Destructor
 
 		void updateKeyboardState(const std::vector<std::vector<int>>& keyState, int currentRow, const std::string& previousGuess);
-
-		// ~~~~~~~~~~~~~~~~~~
-
-		// ~~~ TEST ZONE ~~~
+		
 		void reset();
 };
 

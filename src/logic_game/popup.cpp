@@ -12,11 +12,18 @@ Result::Result(Graphics* result): popup(result), result_font(result_font), popup
 
 //Destructor
 Result::~Result() {
-	if (result_win) SDL_DestroyTexture(result_win);
-	if (result_lose) SDL_DestroyTexture(result_lose);
-	if (retry_button) SDL_DestroyTexture(retry_button);
-	if (exit_button) SDL_DestroyTexture(exit_button);
+
+	popup->destroyTexture(WIN_SCREEN, result_win);
+	popup->destroyTexture(LOSE_SCREEN, result_lose);
+	popup->destroyTexture(RETRY_BUTTON, retry_button);
+	popup->destroyTexture(EXIT_BUTTON, exit_button);
+
 	if (renderSecretWord) SDL_DestroyTexture(renderSecretWord);
+	renderSecretWord = nullptr;
+
+	if (result_win || result_lose || retry_button || exit_button || renderSecretWord)
+		std::cout << "[DEBUG] Failed to destroy Result." << std::endl;
+	else std::cout << "[DEBUG] Destroyed Result successfully!" << std::endl;
 }
 
 //Is it a retry button?
