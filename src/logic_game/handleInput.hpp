@@ -12,7 +12,7 @@
 
 class HandleInput{
     public:
-        void handleEvent(SDL_Event& event, std::string& currentWord, int& currentCol, int maxCols, Grid&grid, int& currentRow);
+        void handleEvent(SDL_Event& event, std::string& currentWord, int& currentCol, int& currentRow, int maxCols, Grid&grid);
         std::string getPreviousWord() const {
             return previousWord;
         }

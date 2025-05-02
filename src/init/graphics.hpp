@@ -72,7 +72,7 @@ class ScrollingBackground {
 		void setTexture(SDL_Texture* _texture);
 		void scroll(int distance);
 
-		//Getter để lấy texture
+		//Getter
 		SDL_Texture* getTexture() const { return texture; }
 
 		//Access to render (Graphics)

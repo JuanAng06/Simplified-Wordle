@@ -25,7 +25,8 @@ class Keyboard{
 		SDL_Texture* keyLayout = keyboardS->loadTexture(KEY_LETTER_LAYOUT);
 
 	public:
-        Keyboard(Graphics* gfx, int startX_ = START_KEYBOARD_X, int startY_ = START_KEYBOARD_Y, int s = 0); // Constructor
+		Keyboard();
+        Keyboard(Graphics* gfx, int startX_ = START_KEYBOARD_X, int startY_ = START_KEYBOARD_Y); // Constructor
 		void renderKeyboard(SDL_Color textColor);
 		~Keyboard(); // Destructor
 

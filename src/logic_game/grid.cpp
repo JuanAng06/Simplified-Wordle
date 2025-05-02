@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+//Constructor - TEST
+Grid::Grid(){}
+
 //Constructor
 Grid::Grid(Graphics* gridChar ,TTF_Font* font) : gridFont(font), gridChar(gridChar){
     for (int i = 0; i < ROWS; i++){

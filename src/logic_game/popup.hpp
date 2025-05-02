@@ -43,6 +43,7 @@ class Result{
         Mix_Chunk* clickButton = sound->loadSound(CLICK_BUTTON);
 
     public:
+        Result();
         Result(Graphics* result);
         ~Result();
 

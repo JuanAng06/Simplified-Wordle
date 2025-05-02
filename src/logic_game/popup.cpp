@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+//Default
+Result::Result(){}
+
 //Constructor
 Result::Result(Graphics* result): popup(result), result_font(result_font), popup_font(popup_font) {
 	result_font = popup->loadFont(KEYBOARD_FONT, REVEAL_SECRETWORD_TEXTSIZE);

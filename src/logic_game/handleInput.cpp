@@ -4,7 +4,7 @@
 #include <iostream>
 
 //Handle input event
-void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& currentCol, int maxCols, Grid&grid, int& currentRow){
+void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& currentCol, int& currentRow, int maxCols, Grid&grid){
 
     if (event.type == SDL_KEYDOWN){
         playKeySound();

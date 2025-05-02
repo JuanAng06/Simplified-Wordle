@@ -27,6 +27,7 @@ class Grid{
         SDL_Texture* green_cell = gridChar->loadTexture(CORRECT_CELL);
 
     public:
+        Grid();
         Grid(Graphics* gridChar, TTF_Font* font);
         void render();
         void setLetter(int row, int col, char letter);

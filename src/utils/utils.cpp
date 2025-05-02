@@ -6,6 +6,8 @@ bool isValidChar (char c){
     return (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'));
 }
 
+Button::Button(){}
+
 //Ask: Why error if not pass graphics and texture?
 Button::Button(Graphics* g, int x, int y, int w, int h, SDL_Texture* normalTex, SDL_Texture* hoverTex)
 : graphics(g), normalTex(normalTex), hoverTex(hoverTex) {
