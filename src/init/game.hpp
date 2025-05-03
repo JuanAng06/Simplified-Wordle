@@ -24,32 +24,35 @@ class Start{
         void loadMainTexture();
 
         //Main function
-        bool isOnMainMenu();
-        void resetGame(Keyboard &keyboard, Grid& grid, WordProcessor &wordProcessor, bool &gameRunning);
+        bool gonnaPlay();
+        void resetGame();
         void exitGame();
         void continueGame();
 
         //Process main logic
         void newGame();
         bool correctGuess(const std::vector<int> &gridState);
-        void runGameLoop(HandleInput &inputHandler, Grid& grid, Keyboard& keyboard, Result& result, ScrollingBackground& background, std::string& secretWord);
-        void processResult(bool& guessedCorrectly, int& currentRow, std::string& secretWord,
-                            Keyboard& keyboard, Grid& grid, WordProcessor& wordProcessorTest, Result& result, bool& gameRunning, bool &onMenu);
+        void runGameLoop();
+        void processResult();
 
         //Render frame
-        void renderFrame(ScrollingBackground &background, Grid& grid, Keyboard& keyboard, Result& result, const SDL_Color& textCol, Button& backToMenuBtn, Button& giveUpBtn,
-                        bool& showOnce, bool& didShowWhenInvalid);
-        void renderFrame(); //Add later
+        void renderFrame();
 
-        void cleanUp(); //Quit
+        //Quit
+        void cleanUp();
 
     private:
         Graphics graphics;
-
+        Audio audio;
+        HandleInput* inputHandler;
+        Keyboard* keyboard;
+        Grid* grid;
+        Result* result;
+        ScrollingBackground background;
         WordProcessor wordProcessorTest;
+        std::string secretWord = "";
 
         SDL_Event event;
-        int mouseX, mouseY;
 
         //Main menu
         SDL_Texture* menuScreen = nullptr;
@@ -66,7 +69,6 @@ class Start{
         SDL_Texture* giveUpButton_hover = nullptr;
 
         //Audio
-	    Audio audio;
         Mix_Chunk* clickSound = nullptr;
         Mix_Music* bgm = nullptr;
 
@@ -78,7 +80,7 @@ class Start{
         //Grid initialization
         TTF_Font *gridFont = nullptr;
 
-        //Sth
+        //Uses for processing word
         std::string currentWord = "";
         int currentCol = 0;
         int currentRow = 0;
@@ -90,9 +92,9 @@ class Start{
         bool didShowWhenInvalid = false;
         bool onMenu = true;
 
-        
+        bool guessedCorrectly = false;
 
-        //Button Initialization - TEST
+        //Button Initialization
         Button backToMenuBtn;
         Button giveUpBtn;
 

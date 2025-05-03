@@ -12,7 +12,7 @@ class Keyboard{
 	private:
 		Graphics* keyboardS;
         TTF_Font* font;
-		int startX, startY;
+		int startX = START_KEYBOARD_X, startY = START_KEYBOARD_Y;
 		int size;
 		
 		std::vector<std::string> keyboardRows = {"QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"};
@@ -26,7 +26,7 @@ class Keyboard{
 
 	public:
 		Keyboard();
-        Keyboard(Graphics* gfx, int startX_ = START_KEYBOARD_X, int startY_ = START_KEYBOARD_Y); // Constructor
+        Keyboard(Graphics* gfx); // Constructor
 		void renderKeyboard(SDL_Color textColor);
 		~Keyboard(); // Destructor
 

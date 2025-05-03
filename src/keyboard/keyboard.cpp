@@ -8,8 +8,7 @@
 Keyboard::Keyboard(){}
 
 //Constructor
-Keyboard::Keyboard(Graphics* gfx, int x, int y)
-: keyboardS(gfx), startX(x), startY(y) {
+Keyboard::Keyboard(Graphics* gfx) : keyboardS(gfx) {
     font = keyboardS->loadFont(KEYBOARD_FONT, KEYBOARD_TEXT_SIZE);
     if (!font) std::cerr << "Error, font not loaded!" << TTF_GetError() << std::endl;
 

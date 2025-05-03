@@ -21,8 +21,8 @@ class WordProcessor {
         void setSecretWord(); 
         std::string getSecretWord() const { return secretWord; } 
 
-        void updatePreviousGuess(const HandleInput& inputHandler){
-            previousGuess = inputHandler.getPreviousWord();
+        void updatePreviousGuess(const HandleInput* inputHandler){
+            previousGuess = inputHandler->getPreviousWord();
         }
 
         std::string getPreviousGuess () const { return previousGuess; } 

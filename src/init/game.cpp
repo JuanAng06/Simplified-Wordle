@@ -19,142 +19,123 @@ void Start::initGameObjects()
 	loadMenuTexture();
 	loadMainTexture();
 
+	// Pointer init
+	keyboard = new Keyboard(&graphics);
+
 	// background music
 	bgm = audio.loadMusic(BGM);
 	audio.play(bgm);
 
 	// Grid intialization
 	gridFont = graphics.loadFont(KEYBOARD_FONT, 30);
+	grid = new Grid(&graphics, gridFont);
+
+	// Popup init
+	result = new Result(&graphics);
+
+	// Input init
+	inputHandler = new HandleInput(&audio);
+
+	// Scrolling background
+	background.setTexture(graphics.loadTexture(BACKGROUND_IMG));
 
 	// Button intialization
 	backToMenuBtn = Button(&graphics, 30, 30, 60, 60, backToMenuButton, backToMenuButton_hover);
 	giveUpBtn = Button(&graphics, SCREEN_WIDTH - 180, 30, 150, 60, giveUpButton, giveUpButton_hover);
 }
 
-void Start::runGameLoop(HandleInput &inputHandler, Grid& grid, Keyboard& keyboard, Result& result, ScrollingBackground& background, std::string& secretWord){
+void Start::runGameLoop()
+{
 	while (gameRunning)
+	{
+		if (onMenu && !gonnaPlay())
+			exitGame();
+		else
+			onMenu = false;
+
+		guessedCorrectly = false;
+		bool gameOver = false;
+
+		while (SDL_PollEvent(&event))
 		{
-			if (onMenu && !isOnMainMenu())
+			if (event.type == SDL_QUIT)
 				exitGame();
-			else
-				onMenu = false;
 
-			bool guessedCorrectly = false;
-			bool gameOver = false;
+			inputHandler->handleEvent(event, currentWord, currentCol, currentRow, COLS, grid);
 
-			while (SDL_PollEvent(&event))
+			// Process the check prucedure
+			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN && currentRow < ROWS)
 			{
-				if (event.type == SDL_QUIT)
-					exitGame();
-
-				inputHandler.handleEvent(event, currentWord, currentCol, currentRow, COLS, grid);
-
-				// Process the check prucedure
-				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN && currentRow < ROWS)
+				if (currentWord.length() == 5)
 				{
-					if (currentWord.length() == 5)
-					{
 
-						// debug (DO NOT REMOVE - It crashed somehow)
-						// std::cout << std::string(20, '~') << std::endl;
-						// std::cout << "ENTER was pressed" << std::endl;
+					// Update the guess stat (Use previousGuess to check)
+					wordProcessorTest.updatePreviousGuess(inputHandler);
 
-						// Update the guess stat (Use previousGuess to check)
-						wordProcessorTest.updatePreviousGuess(inputHandler);
+					// Check and update grid state
+					wordProcessorTest.checkGuess(currentWord, currentRow);
+					const auto &gridState = wordProcessorTest.getGridState();
+					keyboard->updateKeyboardState(gridState, currentRow, wordProcessorTest.getPreviousGuess());
+					grid->updateGridState(gridState);
 
-						// Check and update grid state
-						wordProcessorTest.checkGuess(currentWord, currentRow);
-						const auto &gridState = wordProcessorTest.getGridState();
-						keyboard.updateKeyboardState(gridState, currentRow, wordProcessorTest.getPreviousGuess());
-						grid.updateGridState(gridState);
+					// Check if the game is over
+					guessedCorrectly = correctGuess(gridState[currentRow]);
+					if (guessedCorrectly || currentRow == ROWS - 1)
+						gameOver = true;
 
-						// Check if the game is over
-						guessedCorrectly = correctGuess(gridState[currentRow]);
-						if (guessedCorrectly || currentRow == ROWS - 1)
-							gameOver = true;
-
-						continueGame(); // Continue the game
-					}
-					else
-						didShowWhenInvalid = true;
+					continueGame(); // Continue the game
 				}
-				if (backToMenuBtn.isClicked(event))
-				{
-					audio.playSfx(clickSound);
-					onMenu = true;
-					resetGame(keyboard, grid, wordProcessorTest, gameRunning);
-					std::cout << "Going back to main menu..." << std::endl;
-				}
-
-				if (giveUpBtn.isClicked(event) || gameOver)
-				{
-					if (giveUpBtn.isClicked(event))
-						audio.playSfx(clickSound);
-					processResult(guessedCorrectly, currentRow, secretWord, keyboard, grid,
-								  wordProcessorTest, result, gameRunning, onMenu);
-				}
+				else
+					didShowWhenInvalid = true;
+			}
+			if (backToMenuBtn.isClicked(event))
+			{
+				audio.playSfx(clickSound);
+				onMenu = true;
+				resetGame();
+				std::cout << "Going back to main menu..." << std::endl;
 			}
 
-			// Render
-			renderFrame(background, grid, keyboard, result, textColor, backToMenuBtn, giveUpBtn,
-						showOnce, didShowWhenInvalid);
+			if (giveUpBtn.isClicked(event) || gameOver)
+			{
+				if (giveUpBtn.isClicked(event))
+					audio.playSfx(clickSound);
+				processResult();
+			}
 		}
+
+		// Render
+		renderFrame();
+	}
 }
 
 void Start::play()
 {
 	wordProcessorTest.loadDictionary(DICTIONARY);
 
-	//////////////////////// Initialization ///////////////////////
-
 	initGameObjects();
-
-	Keyboard keyboard(&graphics);
-
-	///////////////////////// UI initialization ///////////////////////////////////
-
-	// Load scrolling background
-	ScrollingBackground background;
-	background.setTexture(graphics.loadTexture(BACKGROUND_IMG));
-
-	// Input handler
-	HandleInput inputHandler;
-
-	// Grid initialization
-	Grid grid(&graphics, gridFont);
-
-	// Pop Up Message
-	Result result(&graphics);
-
-	///////////////////////// Game loop ////////////////////////////
 
 	// Game loop
 	while (keepRunning)
 	{
-
 		// Set a secret word
 		wordProcessorTest.setSecretWord();
-		std::string secretWord = wordProcessorTest.getSecretWord();
+		secretWord = wordProcessorTest.getSecretWord();
 		std::cout << "Secret Word: " << secretWord << std::endl;
 
 		// Reset round
 		newGame();
-		runGameLoop(inputHandler, grid, keyboard, result, background, secretWord);
-		
+		runGameLoop();
 	}
-	/////////////////////////// quit /////////////////////////////
 
-	if (bgm != nullptr)
-		Mix_FreeMusic(bgm);
-	SDL_DestroyTexture(background.getTexture());
-	graphics.quit();
+	cleanUp();
 }
 
-void Start::resetGame(Keyboard &keyboard, Grid &grid, WordProcessor &wordProcessor, bool &gameRunning)
+void Start::resetGame()
 {
-	keyboard.reset();
-	grid.reset();
-	wordProcessor.reset();
+	keyboard->reset();
+	grid->reset();
+	wordProcessorTest.reset();
 	gameRunning = false;
 }
 
@@ -181,7 +162,7 @@ void Start::loadMenuTexture()
 	tutorial_okayButton = graphics.loadTexture(TUTORIAL_OKAY_BUTTON);
 }
 
-bool Start::isOnMainMenu()
+bool Start::gonnaPlay()
 {
 	Button exitBtn(&graphics, 314, 586, 395, 115, nullptr, menu_ExitButton);
 	Button playBtn(&graphics, 314, 326, 395, 115, nullptr, menu_PlayButton);
@@ -246,8 +227,7 @@ void Start::loadMainTexture()
 	keyboard_layout = graphics.loadTexture(KEYBOARD_IMG);
 }
 
-void Start::renderFrame(ScrollingBackground &background, Grid &grid, Keyboard &keyboard, Result &result, const SDL_Color &textCol, Button &backToMenuBtn, Button &giveUpBtn,
-						bool &showOnce, bool &didShowWhenInvalid)
+void Start::renderFrame()
 {
 
 	// scrolling background
@@ -258,21 +238,21 @@ void Start::renderFrame(ScrollingBackground &background, Grid &grid, Keyboard &k
 	graphics.renderTexture(gradient, 0, 0);
 	graphics.renderTexture(guess_board, 0, 40);
 	graphics.renderTexture(keyboard_layout, 0, MID_HEIGHT);
-	keyboard.renderKeyboard(textCol);
+	keyboard->renderKeyboard(textColor);
 	backToMenuBtn.renderButton();
 	giveUpBtn.renderButton();
 
 	// Render grid state
-	grid.renderGridState(graphics);
+	grid->renderGridState(graphics);
 
 	// Render the letters
-	grid.render();
+	grid->render();
 
 	// Render the pop up message
 	if (showOnce)
-		result.renderMessage("Guess your first word!", showOnce, POPUP_X, POPUP_Y);
+		result->renderMessage("Guess your first word!", showOnce, POPUP_X, POPUP_Y);
 	if (didShowWhenInvalid)
-		result.renderMessage("Too short!", didShowWhenInvalid, POPUP_X + 75, POPUP_Y);
+		result->renderMessage("Too short!", didShowWhenInvalid, POPUP_X + 75, POPUP_Y);
 
 	// Show to the screen
 	graphics.presentScene();
@@ -302,10 +282,16 @@ void Start::newGame()
 
 void Start::cleanUp()
 {
+	if (bgm != nullptr) Mix_FreeMusic(bgm);
+	SDL_DestroyTexture(background.getTexture());
+	delete keyboard; keyboard = nullptr;
+	delete grid; grid = nullptr;
+	delete result; result = nullptr;
+	delete inputHandler; inputHandler = nullptr;
+	graphics.quit();
 }
 
-void Start::processResult(bool &guessedCorrectly, int &currentRow, std::string &secretWord,
-						  Keyboard &keyboard, Grid &grid, WordProcessor &wordProcessorTest, Result &result, bool &gameRunning, bool &onMenu)
+void Start::processResult()
 {
 	// Debug
 	if (guessedCorrectly)
@@ -313,13 +299,13 @@ void Start::processResult(bool &guessedCorrectly, int &currentRow, std::string &
 	else
 		std::cout << " ~~~~~~~~~~~ User failed to find a word ~~~~~~~~~~~~~" << std::endl;
 
-	if (result.retry(guessedCorrectly, secretWord))
-		resetGame(keyboard, grid, wordProcessorTest, gameRunning); // New word
+	if (result->retry(guessedCorrectly, secretWord))
+		resetGame(); // New word
 
 	else
-	{
-		resetGame(keyboard, grid, wordProcessorTest, gameRunning);
+	{ //Back to main menu
+		resetGame();
 		gameRunning = false;
 		onMenu = true;
-	} // Back to main menu
+	}
 }

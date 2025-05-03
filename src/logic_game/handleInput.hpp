@@ -12,7 +12,7 @@
 
 class HandleInput{
     public:
-        void handleEvent(SDL_Event& event, std::string& currentWord, int& currentCol, int& currentRow, int maxCols, Grid&grid);
+        void handleEvent(SDL_Event& event, std::string& currentWord, int& currentCol, int& currentRow, int maxCols, Grid*grid);
         std::string getPreviousWord() const {
             return previousWord;
         }
@@ -20,22 +20,26 @@ class HandleInput{
         //Key press sound effect
         void playKeySound();
 
-        //Destructor - TEST
+        //Constructor
+        HandleInput(); //Default
+        HandleInput(Audio* audio);
+
+        //Destructor
         ~HandleInput();
 
     private:
         std::string previousWord = "";
 
         //~~~ TEST ZONE ~~~
-        Audio* sound;
-        Mix_Chunk* enterKey_sfx = sound->loadSound(ENTER_KEY);
+        Audio* sound = nullptr;
+        Mix_Chunk* enterKey_sfx = nullptr;
 
         //Keyboard input
-        Mix_Chunk* keySound_1 = sound->loadSound(KEY_SOUND_1);
-        Mix_Chunk* keySound_2 = sound->loadSound(KEY_SOUND_2);
-        Mix_Chunk* keySound_3 = sound->loadSound(KEY_SOUND_3);
-        Mix_Chunk* keySound_4 = sound->loadSound(KEY_SOUND_4);
-        Mix_Chunk* keySound_5 = sound->loadSound(KEY_SOUND_5);
+        Mix_Chunk* keySound_1 = nullptr;
+        Mix_Chunk* keySound_2 = nullptr;
+        Mix_Chunk* keySound_3 = nullptr;
+        Mix_Chunk* keySound_4 = nullptr;
+        Mix_Chunk* keySound_5 = nullptr;
 };
 
 #endif

@@ -3,8 +3,24 @@
 
 #include <iostream>
 
+HandleInput::HandleInput(){}
+
+HandleInput::HandleInput(Audio* audio){
+
+    sound = audio;
+
+    enterKey_sfx = sound->loadSound(ENTER_KEY);
+
+    //Keyboard input
+    keySound_1 = sound->loadSound(KEY_SOUND_1);
+    keySound_2 = sound->loadSound(KEY_SOUND_2);
+    keySound_3 = sound->loadSound(KEY_SOUND_3);
+    keySound_4 = sound->loadSound(KEY_SOUND_4);
+    keySound_5 = sound->loadSound(KEY_SOUND_5);
+}
+
 //Handle input event
-void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& currentCol, int& currentRow, int maxCols, Grid&grid){
+void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& currentCol, int& currentRow, int maxCols, Grid*grid){
 
     if (event.type == SDL_KEYDOWN){
         playKeySound();
@@ -12,10 +28,8 @@ void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& c
 
     if (event.type == SDL_TEXTINPUT && currentCol < maxCols && isValidChar(event.text.text[0])){
         currentWord += event.text.text[0];
-        grid.setLetter(currentRow,currentCol, event.text.text[0]);
+        grid->setLetter(currentRow,currentCol, event.text.text[0]);
         currentCol++;
-
-        std::cout << "A key was pressed. " << std::endl;
 
     } 
     
@@ -23,7 +37,7 @@ void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& c
      else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_BACKSPACE && currentCol > 0){
         currentWord.pop_back();
         currentCol--;
-        grid.setLetter(currentRow, currentCol, ' ');
+        grid->setLetter(currentRow, currentCol, ' ');
 
         std::cout << "BACKSPACE" << std::endl;
     }
