@@ -19,13 +19,13 @@ class Result{
 
         std::string lastSecretWord = "";
 
-        SDL_Texture* result_win = popup->loadTexture(WIN_SCREEN);
-        SDL_Texture* result_lose = popup->loadTexture(LOSE_SCREEN);
-        SDL_Texture* retry_button = popup->loadTexture(RETRY_BUTTON);
-        SDL_Texture* exit_button = popup->loadTexture(EXIT_BUTTON);
+        SDL_Texture* result_win = nullptr;
+        SDL_Texture* result_lose = nullptr;
+        SDL_Texture* retry_button = nullptr;
+        SDL_Texture* exit_button = nullptr;
 
         //Popup message
-        SDL_Texture* popupBox = popup->loadTexture(POP_UP_ANNOUCNER);
+        SDL_Texture* popupBox = nullptr;
 
         //Using mouse event
         SDL_Event event;

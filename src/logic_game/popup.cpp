@@ -11,6 +11,12 @@ Result::Result(Graphics* result): popup(result), result_font(result_font), popup
 	popup_font = popup->loadFont(KEYBOARD_FONT, POPUP_TEXTSIZE);
 	if (!result_font) std::cerr << "Result font not loaded! " << TTF_GetError << std::endl;
 	if (!popup_font) std::cerr << "Popup font not loaded! " << TTF_GetError << std::endl;
+
+	result_win = popup->loadTexture(WIN_SCREEN);
+    result_lose = popup->loadTexture(LOSE_SCREEN);
+    retry_button = popup->loadTexture(RETRY_BUTTON);
+    exit_button = popup->loadTexture(EXIT_BUTTON);
+    popupBox = popup->loadTexture(POP_UP_ANNOUCNER);
 }
 
 //Destructor
@@ -48,7 +54,6 @@ bool Result::retry(bool didPlayerWin, std::string& secretWord) {
 		showSecretWord(secretWord);
 
 		SDL_PollEvent(&event);
-
 		SDL_GetMouseState(&mouseX, &mouseY);
 
 		if (event.type == SDL_QUIT) {
@@ -82,7 +87,7 @@ bool Result::retry(bool didPlayerWin, std::string& secretWord) {
 void Result::showSecretWord(std::string &secretWord){
 
 	if (lastSecretWord != secretWord){
-		lastSecretWord == secretWord;
+		lastSecretWord = secretWord;
 		std::string upperWord = secretWord;
 		for (char &c : upperWord){
 			c = toupper(c);
@@ -99,7 +104,7 @@ void Result::showSecretWord(std::string &secretWord){
 	popup->renderTexture(renderSecretWord, REVEAL_SECRETWORD_X, REVEAL_SECRETWORD_Y);
 }
 
-//Render the message (i.e: "Guess your first word!") ~~~ TEST ZONE ~~~
+//Render the message (i.e: "Guess your first word!")
 void Result::renderMessage(const char* message, bool &showOnce, int x, int y){
 	Uint32 currentTime = SDL_GetTicks();
 

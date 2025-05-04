@@ -3,8 +3,9 @@
 
 #include <iostream>
 
-HandleInput::HandleInput(){}
+HandleInput::HandleInput(){} //Default constructor
 
+//Constructor
 HandleInput::HandleInput(Audio* audio){
 
     sound = audio;
@@ -39,7 +40,7 @@ void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& c
         currentCol--;
         grid->setLetter(currentRow, currentCol, ' ');
 
-        std::cout << "BACKSPACE" << std::endl;
+        std::cout << "BACKSPACE was pressed." << std::endl; //Debug
     }
 
     //Case: Enter
@@ -52,9 +53,10 @@ void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& c
             currentCol = 0;
         }
 
-        std::cout << "ENTER" << std::endl;
+        std::cout << "ENTER was pressed." << std::endl; //Debug
     }
 
+    //Debug
     if(isValidChar(event.text.text[0])){
         std::cout << "currentWord: " << currentWord << std::endl 
         << "previousWord: " << previousWord << std::endl
@@ -63,6 +65,7 @@ void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& c
     }
 }
 
+//Random sfx each key was pressed
 void HandleInput::playKeySound(){
     std::vector<Mix_Chunk*> playSound = {keySound_1, keySound_2, keySound_3, keySound_4, keySound_5};
     int index = rand() % playSound.size();

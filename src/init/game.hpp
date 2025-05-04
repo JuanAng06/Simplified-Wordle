@@ -33,6 +33,7 @@ class Start{
         void newGame();
         bool correctGuess(const std::vector<int> &gridState);
         void runGameLoop();
+        void processGuess();
         void processResult();
 
         //Render frame
@@ -93,6 +94,7 @@ class Start{
         bool onMenu = true;
 
         bool guessedCorrectly = false;
+        bool gameOver = false;
 
         //Button Initialization
         Button backToMenuBtn;

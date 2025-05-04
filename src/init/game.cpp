@@ -1,7 +1,3 @@
-/*TO DO:
-	Refractor code
-*/
-
 #include "game.hpp"
 #include "graphics.hpp"
 #include "music_and_background/audioManager.hpp"
@@ -15,6 +11,7 @@
 
 void Start::initGameObjects()
 {
+	// Init graphics
 	graphics.init();
 	loadMenuTexture();
 	loadMainTexture();
@@ -44,6 +41,7 @@ void Start::initGameObjects()
 	giveUpBtn = Button(&graphics, SCREEN_WIDTH - 180, 30, 150, 60, giveUpButton, giveUpButton_hover);
 }
 
+///// RUN GAME LOOP ////
 void Start::runGameLoop()
 {
 	while (gameRunning)
@@ -53,62 +51,15 @@ void Start::runGameLoop()
 		else
 			onMenu = false;
 
-		guessedCorrectly = false;
-		bool gameOver = false;
+		// Process guess procedure
+		processGuess();
 
-		while (SDL_PollEvent(&event))
-		{
-			if (event.type == SDL_QUIT)
-				exitGame();
-
-			inputHandler->handleEvent(event, currentWord, currentCol, currentRow, COLS, grid);
-
-			// Process the check prucedure
-			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN && currentRow < ROWS)
-			{
-				if (currentWord.length() == 5)
-				{
-
-					// Update the guess stat (Use previousGuess to check)
-					wordProcessorTest.updatePreviousGuess(inputHandler);
-
-					// Check and update grid state
-					wordProcessorTest.checkGuess(currentWord, currentRow);
-					const auto &gridState = wordProcessorTest.getGridState();
-					keyboard->updateKeyboardState(gridState, currentRow, wordProcessorTest.getPreviousGuess());
-					grid->updateGridState(gridState);
-
-					// Check if the game is over
-					guessedCorrectly = correctGuess(gridState[currentRow]);
-					if (guessedCorrectly || currentRow == ROWS - 1)
-						gameOver = true;
-
-					continueGame(); // Continue the game
-				}
-				else
-					didShowWhenInvalid = true;
-			}
-			if (backToMenuBtn.isClicked(event))
-			{
-				audio.playSfx(clickSound);
-				onMenu = true;
-				resetGame();
-				std::cout << "Going back to main menu..." << std::endl;
-			}
-
-			if (giveUpBtn.isClicked(event) || gameOver)
-			{
-				if (giveUpBtn.isClicked(event))
-					audio.playSfx(clickSound);
-				processResult();
-			}
-		}
-
-		// Render
+		// Render frame
 		renderFrame();
 	}
 }
 
+////// Play the game //////
 void Start::play()
 {
 	wordProcessorTest.loadDictionary(DICTIONARY);
@@ -129,6 +80,62 @@ void Start::play()
 	}
 
 	cleanUp();
+}
+
+////// Process the guess ////// <- MAIN LOGIC HERE !!!!
+void Start::processGuess()
+{
+	guessedCorrectly = false;
+	gameOver = false;
+	while (SDL_PollEvent(&event))
+	{
+		if (event.type == SDL_QUIT)
+			exitGame();
+
+		// Handle input
+		inputHandler->handleEvent(event, currentWord, currentCol, currentRow, COLS, grid);
+
+		// Process the check prucedure
+		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN && currentRow < ROWS)
+		{
+			if (currentWord.length() == 5)
+			{
+
+				// Update the guess stat (Use previousGuess to check)
+				wordProcessorTest.updatePreviousGuess(inputHandler);
+
+				// Check and update grid state
+				wordProcessorTest.checkGuess(currentWord, currentRow);
+				const auto &gridState = wordProcessorTest.getGridState();
+				keyboard->updateKeyboardState(gridState, currentRow, wordProcessorTest.getPreviousGuess());
+				grid->updateGridState(gridState);
+
+				// Check if the game is over
+				guessedCorrectly = correctGuess(gridState[currentRow]);
+				if (guessedCorrectly || currentRow == ROWS - 1)
+					gameOver = true;
+
+				continueGame(); // Continue the game
+			}
+			else
+				didShowWhenInvalid = true; // If the word is not long enough
+		}
+		// If player click the "Back" button
+		if (backToMenuBtn.isClicked(event))
+		{
+			audio.playSfx(clickSound);
+			onMenu = true;
+			resetGame();
+			std::cout << "Going back to main menu..." << std::endl;
+		}
+
+		if (giveUpBtn.isClicked(event) || gameOver) // If player give up
+		{
+			if (giveUpBtn.isClicked(event))
+				audio.playSfx(clickSound);
+			processResult();
+		}
+	}
 }
 
 void Start::resetGame()
@@ -191,18 +198,18 @@ bool Start::gonnaPlay()
 		{
 
 			if (exitClick)
-				return false;
+				return false; // Quit the gane
 			if (playClick)
-				return true;
+				return true; // Play the game
 			if (tutClick)
-				isOnTutorialScreen = true;
+				isOnTutorialScreen = true; //Show the tutorial screen
 
 			exitBtn.renderButton();
 			playBtn.renderButton();
 			tutorialBtn.renderButton();
 		}
 		else
-		{
+		{ // Show tutorial
 			graphics.renderTexture(menu_tutorialScreen, 112, 84);
 			tutorialOkayBtn.renderButton();
 
@@ -282,12 +289,17 @@ void Start::newGame()
 
 void Start::cleanUp()
 {
-	if (bgm != nullptr) Mix_FreeMusic(bgm);
+	if (bgm != nullptr)
+		Mix_FreeMusic(bgm);
 	SDL_DestroyTexture(background.getTexture());
-	delete keyboard; keyboard = nullptr;
-	delete grid; grid = nullptr;
-	delete result; result = nullptr;
-	delete inputHandler; inputHandler = nullptr;
+	delete keyboard;
+	keyboard = nullptr;
+	delete grid;
+	grid = nullptr;
+	delete result;
+	result = nullptr;
+	delete inputHandler;
+	inputHandler = nullptr;
 	graphics.quit();
 }
 
@@ -303,7 +315,7 @@ void Start::processResult()
 		resetGame(); // New word
 
 	else
-	{ //Back to main menu
+	{ // Back to main menu
 		resetGame();
 		gameRunning = false;
 		onMenu = true;

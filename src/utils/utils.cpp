@@ -8,7 +8,6 @@ bool isValidChar (char c){
 
 Button::Button(){}
 
-//Ask: Why error if not pass graphics and texture?
 Button::Button(Graphics* g, int x, int y, int w, int h, SDL_Texture* normalTex, SDL_Texture* hoverTex)
 : graphics(g), normalTex(normalTex), hoverTex(hoverTex) {
     rect = {x, y, w, h};
@@ -45,12 +44,3 @@ void Button::renderButton(){
         graphics->renderTexture(toRender, rect.x, rect.y);
     }
 }
-
-//Destructor
-// Button::~Button(){
-//     if (normalTex) SDL_DestroyTexture(normalTex) ;
-//     if (hoverTex) SDL_DestroyTexture(hoverTex);
-//     hoverTex = normalTex = nullptr;
-//     if (normalTex || hoverTex) std::cout << "[DEBUG] Failed to destroy Button!" << std::endl;
-//     else std::cout << "[DEBUG] Destroyed Button successfully!" << std::endl;
-// }

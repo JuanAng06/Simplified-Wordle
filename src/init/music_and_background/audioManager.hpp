@@ -12,20 +12,12 @@ class Audio{
     Mix_Chunk* sfx;
 
     public:
-    //Load music
-	Mix_Music *loadMusic(const char* path);
-
-	//Play BGM
-	void play(Mix_Music *gMusic);
-
-	//Load SFX
-	Mix_Chunk* loadSound(const char* path);
-
-	//Play SFX
-	void playSfx(Mix_Chunk* gChunk);
-
-	//Quit sound
-	void quitSound(const char *path, Mix_Chunk *& gChunk);
+	Mix_Music *loadMusic(const char* path); //Load music
+	void play(Mix_Music *gMusic); //Play BGM
+	Mix_Chunk* loadSound(const char* path); //Load SFX
+	void playSfx(Mix_Chunk* gChunk); //Play SFX
+	
+	void quitSound(const char *path, Mix_Chunk *& gChunk); //Quit sound
 };
 
 #endif

@@ -4,14 +4,14 @@
 #include <iostream>
 #include "graphics.hpp"
 
-//////////////////////////////////////// Xử lý lỗi ////////////////////////////////////////
+//////////////////////////////////////// Handle bug ////////////////////////////////////////
 void Graphics::logErrorAndExit(const char* msg, const char* error)
 {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "%s: %s", msg, error);
 	SDL_Quit();
 }
 
-/////////////////////////////////////// Khởi tạo SDL + Window ////////////////////////////////////////
+/////////////////////////////////////// Init SDL + Window ////////////////////////////////////////
 SDL_Window* Graphics::init()
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -41,7 +41,7 @@ SDL_Window* Graphics::init()
 	SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
-/////////////////////////////////////// Chuẩn bị màn hình ///////////////////////////////////////
+/////////////////////////////////////// Prepare + Display ///////////////////////////////////////
 //Render
 void Graphics::prepareScene(SDL_Texture* background)
 {
@@ -49,13 +49,13 @@ void Graphics::prepareScene(SDL_Texture* background)
 	SDL_RenderCopy(renderer, background, NULL, NULL);
 }
 
-//Hiện màn hình - Display
+//Display
 void Graphics::presentScene()
 {
 	SDL_RenderPresent(renderer);
 }
 
-/////////////////////////////////////// Tải + Vẽ hình ///////////////////////////////////////
+/////////////////////////////////////// Load texture ///////////////////////////////////////
 SDL_Texture* Graphics::loadTexture(const char* filename)
 {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s", filename);
@@ -67,7 +67,7 @@ SDL_Texture* Graphics::loadTexture(const char* filename)
 	return texture;
 }
 
-////////////////////////////////////// Render ảnh ở (x,y) ////////////////////////////////////////
+////////////////////////////////////// Render at (x,y) ////////////////////////////////////////
 void Graphics::renderTexture(SDL_Texture *texture, int x, int y)
 {
 	SDL_Rect dest;
@@ -80,7 +80,7 @@ void Graphics::renderTexture(SDL_Texture *texture, int x, int y)
 }
 
 
-/////////////////////////////////////// Thoát SDL ///////////////////////////////////////
+/////////////////////////////////////// Quit SDL + Destroy window ///////////////////////////////////////
 void Graphics::quit()
 {
 	IMG_Quit();
@@ -112,6 +112,8 @@ void Graphics::render(const ScrollingBackground& bgr){
 }
 
 //////////////////////////////// TEXT RENDER //////////////////////////
+
+//Load font
 TTF_Font* Graphics::loadFont (const char* path, int size){
 	TTF_Font* gFont = TTF_OpenFont ( path, size );
 	if (gFont == nullptr){
@@ -121,6 +123,7 @@ TTF_Font* Graphics::loadFont (const char* path, int size){
 	return gFont;
 }
 
+//Render text
 SDL_Texture* Graphics::renderText(const char* text, TTF_Font* font, SDL_Color textColor){
 	SDL_Surface* textSurface = TTF_RenderText_Solid ( font, text, textColor );
 	if ( textSurface == nullptr){
@@ -138,6 +141,7 @@ SDL_Texture* Graphics::renderText(const char* text, TTF_Font* font, SDL_Color te
 	return texture;
 }
 
+////////////////// DESTROY TEXTURES /////////////////////////////
 void Graphics::destroyTexture(const char* path, SDL_Texture *& texture){
 	if (texture != nullptr){
 		SDL_DestroyTexture(texture);

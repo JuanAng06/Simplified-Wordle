@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-//Constructor - TEST
+//Constructor
 Grid::Grid(){}
 
 //Constructor
@@ -12,6 +12,10 @@ Grid::Grid(Graphics* gridChar ,TTF_Font* font) : gridFont(font), gridChar(gridCh
             grid[i][j] = ' '; //empty cell
         }
     }
+
+    gray_cell = gridChar->loadTexture(WRONG_CELL);
+    yellow_cell = gridChar->loadTexture(MISPLACE_CELL);
+    green_cell = gridChar->loadTexture(CORRECT_CELL);
 }
 
 //Initialize the grid + character + Render word
@@ -33,7 +37,7 @@ void Grid::render(){
     }
 }
 
-//Save the letter to grid[ROWS][COLS] (See grid.hpp)
+//Save the letter to 2D array grid (See grid.hpp)
 void Grid::setLetter(int row, int col, char letter){
     if (row >= 0 && row < ROWS && col >= 0 && col < COLS){
         letter = toupper(letter);
@@ -41,7 +45,7 @@ void Grid::setLetter(int row, int col, char letter){
     }
 }
 
-// Update the cells
+// Update the cells + Render cells
 void Grid::renderGridState(Graphics& graphics){
     for (int row = 0; row < gridState.size(); row++){
         for (int col = 0; col < gridState[row].size(); col++){
@@ -70,6 +74,7 @@ void Grid::renderGridState(Graphics& graphics){
     }
 }
 
+//Reset grid state per round
 void Grid::reset(){
 
     //Reset character grid
@@ -86,7 +91,7 @@ void Grid::reset(){
     gridState.assign(ROWS, std::vector<int>(COLS, -1));
 }
 
-//Destructor - TEST ZONE
+//Destructor
 Grid::~Grid(){
     if (gray_cell) SDL_DestroyTexture(gray_cell);
     if (yellow_cell) SDL_DestroyTexture(yellow_cell);

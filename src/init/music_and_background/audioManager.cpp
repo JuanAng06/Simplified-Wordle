@@ -22,7 +22,7 @@ void Audio::play(Mix_Music *gMusic){
 	}
 }
 
-//Load Noise (Sound effect)
+//Load sound effect
 Mix_Chunk* Audio::loadSound(const char* path){
 	Mix_Chunk* gChunk = Mix_LoadWAV(path);
 	if (gChunk == nullptr){

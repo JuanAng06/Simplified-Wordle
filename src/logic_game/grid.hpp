@@ -22,12 +22,12 @@ class Grid{
         std::vector<std::vector<int>> gridState;
 
         // Render cell color
-        SDL_Texture* gray_cell = gridChar->loadTexture(WRONG_CELL);
-        SDL_Texture* yellow_cell = gridChar->loadTexture(MISPLACE_CELL);
-        SDL_Texture* green_cell = gridChar->loadTexture(CORRECT_CELL);
+        SDL_Texture* gray_cell = nullptr;
+        SDL_Texture* yellow_cell = nullptr;
+        SDL_Texture* green_cell = nullptr;
 
     public:
-        Grid();
+        Grid(); //Default constructor
         Grid(Graphics* gridChar, TTF_Font* font);
         void render();
         void setLetter(int row, int col, char letter);
@@ -39,8 +39,7 @@ class Grid{
 
         void reset();
 
-        //Destructor - TEST
-        ~Grid();
+        ~Grid(); //Destructor
 
 };
 

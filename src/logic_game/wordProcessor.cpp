@@ -15,7 +15,7 @@ void WordProcessor::setSecretWord(){
 }
 
 void WordProcessor::checkGuess(const std::string& previousGuess, int row){
-    if (previousGuess.length() != WORD_LENGTH) return; //if it's not long enough => End this immidiately
+    if (previousGuess.length() != WORD_LENGTH) return; //If not long enough => End this immidiately
 
     std::vector<int> rowState (WORD_LENGTH, -1); //default: -1
     int searchLetter[255] = {0}; //Count the time the letter appeared on secretLetter
@@ -23,7 +23,7 @@ void WordProcessor::checkGuess(const std::string& previousGuess, int row){
     //Save them
     for (char c : secretWord) { searchLetter[c]++; }
 
-    // Convert previousGuess to lower char (Just in case :3c / Backup ykyk)
+    // Convert previousGuess to lower char
     std::string lowerGuess = previousGuess;
     for (char &c : lowerGuess){ c = tolower(c); }
 
@@ -53,6 +53,7 @@ void WordProcessor::checkGuess(const std::string& previousGuess, int row){
     }
 }
 
+//Reset grid state per round
 void WordProcessor::reset(){
     gridState.assign(ROWS, std::vector<int>(COLS, -1));
 }

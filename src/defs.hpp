@@ -5,7 +5,6 @@ const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 768;
 const int MID_WIDTH = SCREEN_WIDTH / 2;
 const int MID_HEIGHT = SCREEN_HEIGHT / 2;
-const int MID_BOTTOM = SCREEN_HEIGHT - SCREEN_HEIGHT / 2;
 
 const int WORD_LENGTH = 5;
 

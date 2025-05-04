@@ -6,7 +6,6 @@
 
 #include "grid.hpp"
 
-//~~~TEST ZONE ~~~
 #include "../init/music_and_background/audioManager.hpp"
 #include "../defs.hpp"
 
@@ -30,11 +29,10 @@ class HandleInput{
     private:
         std::string previousWord = "";
 
-        //~~~ TEST ZONE ~~~
         Audio* sound = nullptr;
         Mix_Chunk* enterKey_sfx = nullptr;
 
-        //Keyboard input
+        //Keyboard sound
         Mix_Chunk* keySound_1 = nullptr;
         Mix_Chunk* keySound_2 = nullptr;
         Mix_Chunk* keySound_3 = nullptr;
