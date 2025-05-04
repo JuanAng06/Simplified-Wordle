@@ -19,7 +19,6 @@ class Button{
     public:
         Button(); //Default
         Button(Graphics* g, int x, int y, int w, int h, SDL_Texture* normalTex = nullptr, SDL_Texture* hoverTex = nullptr);
-        // ~Button();
 
         bool isClicked(SDL_Event& event);
         bool isHovered();

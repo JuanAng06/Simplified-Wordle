@@ -31,8 +31,7 @@ void HandleInput::handleEvent(SDL_Event& event, std::string& currentWord, int& c
         currentWord += event.text.text[0];
         grid->setLetter(currentRow,currentCol, event.text.text[0]);
         currentCol++;
-
-    } 
+    }
     
     //Case : Backspace
      else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_BACKSPACE && currentCol > 0){
