@@ -1,5 +1,6 @@
 # Simplified Wordle
  Bài tập lớn cho môn lập trình nâng cao
+ 
  Video Demo cách chơi: [TẠI ĐÂY](https://drive.google.com/file/d/1Zy1dSHkcFeDH7cb4ViUYGUAe4F4b3M0a/view?usp=sharing)
 ## Hướng dẫn cách chơi
  Với mỗi vòng chơi, nhiệm vụ của người chơi là tìm ra từ bí mật gồm 5 chữ cái, người chơi có thể đoán tối đa 6 lần. 
