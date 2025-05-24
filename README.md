@@ -1,5 +1,5 @@
 # Simplified Wordle
- Bài tập lớn cho môn lập trình nâng cao
+ Bài tập lớn cho môn Lập Trình Nâng Cao.
  
  Video Demo cách chơi: [TẠI ĐÂY](https://drive.google.com/file/d/1Zy1dSHkcFeDH7cb4ViUYGUAe4F4b3M0a/view?usp=sharing)
 ## Hướng dẫn cách chơi
