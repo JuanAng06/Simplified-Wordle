@@ -13,3 +13,24 @@
 Trò chơi sẽ kết thúc khi người chơi đã đoán ra từ đó hoặc người chơi hết lượt đoán.
 
 _**Lưu ý:**_ Người chơi có thể từ bỏ giữa chừng bằng cách bấm vào nút _"Give up"_ ở góc trên bên phải. ![Give up](assets/ui/giveup_button.png)
+
+## Cách thêm từ vào Wordle
+ Việc thêm từ vào danh sách từ có sẵn sẽ làm cho mỗi lần chơi trở nên phong phú hơn. Dưới đây là cách thêm từ vào game.
+
+ **Cách thức hiện**
+
+ 1. Mở file `wordlist.txt` nằm trong thư mục gốc của project.
+ 2. Thêm mỗi từ vào dòng mới hoặc sau mỗi dấu cách và đảm bảo từ đó:
+    - Phải có **chính xác** 5 chữ cái
+    - Dùng các **chữ cái tiếng anh**
+    - Không sử dụng kí tự đặc biệt
+
+ > [!WARNING]
+ > Nếu không thêm từ đúng cách có thể dẫn tới chương trình có thể hoạt động không đúng.
+
+ _Ví dụ file `wordlist.txt` chuẩn_ :
+```
+apple mango
+handy bulky
+happy junky
+```
